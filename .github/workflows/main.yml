@@ -1,14 +1,14 @@
-name: Daily Motivation Automation
+name: Full Auto Video Bot
 on:
   schedule:
-    - cron: '0 6 * * *' # Subah 6 baje chalega
+    - cron: '0 5 * * *' # Daily Automation
   workflow_dispatch:
 jobs:
-  run-bot:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Install System Tools
+      - name: System Fix
         run: |
           sudo apt-get update
           sudo apt-get install -y ffmpeg imagemagick
@@ -18,11 +18,12 @@ jobs:
         with:
           python-version: '3.9'
       - name: Install Libraries
-        run: pip install -r requirements.txt
-      - name: Execute Agent
+        run: pip install requests moviepy==1.0.3
+      - name: Run Script
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
           TG_TOKEN: ${{ secrets.TG_TOKEN }}
           TG_CHAT_ID: ${{ secrets.TG_CHAT_ID }}
         run: python main.py
