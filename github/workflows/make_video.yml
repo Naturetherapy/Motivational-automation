@@ -1,0 +1,23 @@
+name: Create Motivational Video
+on:
+  push:
+    paths:
+      - 'data.json' # Jab n8n is file ko update karega tabhi video banegi
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install FFmpeg
+        run: sudo apt-get install -y ffmpeg
+
+      - name: Create Video
+        run: |
+          # Yahan wo Python ya Bash script chalegi jo data.json se quote aur image uthayegi
+          # Aur FFmpeg ke zariye 8-second ki video banayegi jisme "Lucas Hart" likha hoga
+          
+      - name: Send to Telegram
+        run: |
+          curl -v -F "video=@output.mp4" https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendVideo?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}
